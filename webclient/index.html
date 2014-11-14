@@ -1,0 +1,57 @@
+<html ng-app='particleApp'>
+	<head>
+		<title>Particle</title>
+
+		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" />
+		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.css" />
+		<link rel="stylesheet" href="styles.css" />
+		<link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600' rel='stylesheet' type='text/css'>
+
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
+		<script src="/socket.io/socket.io.js"></script>
+		<script src="script.js"></script>
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+	</head>
+	<body ng-controller="mainController">
+
+		<header>
+			<nav class="navbar navbar-main navbar-default">
+				<div class="container">
+					<div class="main-sidebar">
+						<a class="navbar-brand" href="/">Particle</a>
+					</div>
+
+					<ul class="nav navbar-nav navbar-left">
+						<li><a href="#"><i class="fa fa-home"></i> Home</a></li>
+						<li><a href="#data"><i class="fa fa-cloud"></i> Data</a></li>
+						<li><a href="#query"><i class="fa fa-terminal"></i> Query</a></li>
+						<li><a href="#testing"><i class="fa fa-bug"></i> Testing</a></li>
+					</ul>
+
+					<ul class="nav navbar-nav navbar-right">
+						<li><a onclick="location.reload()"><i class="fa fa-refresh"></i> Reload</a></li>
+						<li><img class="avatar" src="http://www.gravatar.com/avatar/aaac12635cccc90b2aaa0186fdd7a971.jpg?s=28" /></li>
+					</ul>
+				</div>
+			</nav>
+			<nav class="navbar navbar-bottom navbar-default">
+				<div class="container">
+					<div class="navbar-header navbar-message">
+						You have 7 notifications
+					</div>
+				</div>
+			</nav>
+		</header>
+
+		<div id="main">
+			<div ng-view></div>
+		</div>
+
+		<footer class="text-center">
+			Particle is a project by <a href="//github.com/tylerchr"><i class="fa fa-github"></i> tylerchr</a>.
+			<p style="font-family:Courier New; margin-top:10px;">Particle 0.0.1</p>
+		</footer>
+
+	</body>
+</html>

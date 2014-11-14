@@ -1,0 +1,153 @@
+header .navbar-main {
+	color: #f0f0f0;
+	background-color: #333;
+	margin-bottom: 0;
+	border-bottom: 0;
+
+	border-radius: 0;
+	border-width: 0;
+}
+
+header .navbar-main .navbar-brand {
+	color: #f0f0f0;
+}
+
+header .navbar-main .navbar-brand:hover {
+	color: #fff;
+}
+
+header .navbar-bottom {
+	margin-bottom: 20px;
+}
+
+.main-sidebar {
+	margin: 0;
+	padding: 0;
+
+	width: 300px;
+	float: left;
+}
+
+.main-content {
+	margin: 0;
+	padding: 0;
+
+	float: left;
+	width: 840px;
+
+	min-height: 180px;
+	margin-bottom: 20px;
+}
+
+.data-point-large * {
+	display: block;
+}
+
+.data-point-large .value {
+	font-size: 24pt;
+	font-family: 'Source Sans Pro', sans-serif;
+	font-weight: 400;
+}
+.data-point-large label {
+	text-transform: uppercase;
+	font-size: 8pt;
+	color: #bbb;
+	font-weight: 400;
+	letter-spacing: 0.1em;
+}
+
+ul.data-list {
+	list-style-type: none;
+	padding: 0;
+}
+
+ul.data-list li span.table-column-header {
+	font-family: 'Source Sans Pro', sans-serif;
+	font-size: 12pt;
+	text-transform: uppercase;
+	font-weight: 600;
+	color: rgba(0,0,0,0.3);
+}
+ul.data-list li span.table-column-header.right {
+	float: right;
+}
+
+ul.data-list li {
+	border-bottom: 1px solid #eee;
+	padding: 12px 0;
+}
+
+ul.data-list li span.data-title {
+	display: block;
+	font-family: 'Source Sans Pro', sans-serif;
+	font-weight: 600;
+	font-size: 18pt;
+}
+ul.data-list li span.data-summary {
+	display: block;
+	margin-top: -2px;
+	margin-bottom: 4px;
+	color: #bbb;
+}
+
+ul.data-list li span.data-meta {
+	color: #bbb;
+	font-size: 0.9em;
+}
+
+ul.data-list li span.data-value {
+	float: right;
+	font-family: 'Source Sans Pro', sans-serif;
+	font-size: 20pt;
+	font-weight: 400;
+	padding: 16px 2px;
+}
+
+.navbar-default .navbar-nav>li>a {
+	border-bottom: 3px solid transparent;
+	color: #c0c0c0;
+}
+
+.navbar-default .navbar-nav>li>a:hover {
+	color: #f0f0f0;
+}
+
+.navbar-default .navbar-nav>li>a:hover {
+	color: #f0f0f0;
+	border-color: limegreen;
+}
+
+.navbar-message {
+	margin: 14px 0;
+}
+
+header .navbar-secondary {
+	margin-bottom: 0;
+}
+
+img.avatar {
+	border-radius: 42px;
+	margin: 9px 0;
+	border: 2px solid #bbb;
+}
+
+form.testing {
+	max-width: 480px;
+	margin-top: 24px;
+	margin-left: auto;
+	margin-right: auto;
+
+	text-align: left;
+}
+
+form label {
+	margin: 0;
+	padding: 0;
+}
+form.testing textarea {
+	height: 120px;
+}
+
+form.testing #music-group input {
+	margin-bottom: 12px;
+}
