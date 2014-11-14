@@ -7,4 +7,4 @@ node app.js
 
 ## Screenshot
 
-[Particle screenshot](https://tylerchr.com/particle-screenshot.png)
+![Particle screenshot](https://tylerchr.com/particle-screenshot.png)
