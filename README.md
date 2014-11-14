@@ -6,9 +6,9 @@ node app.js
 ```
 
 ## TODO List
-    - Implement Users
-    - Write scripts to download data from various APIs
-    - Design generic data store
+- Implement Users
+- Write scripts to download data from various APIs
+- Design generic data store
 
 ## Screenshot
 
