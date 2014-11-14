@@ -4,3 +4,7 @@ What currently exists here is just a reference design for what something like th
 npm install
 node app.js
 ```
+
+## Screenshot
+
+[Particle screenshot](https://tylerchr.com/particle-screenshot.png)
