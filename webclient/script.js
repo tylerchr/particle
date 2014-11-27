@@ -19,6 +19,13 @@ app.config(function($routeProvider) {
 	.when('/testing', {
 		templateUrl: 'pages/testing.html',
 		controller: 'testingController'
+	})
+	.when('/landing', {
+		templateUrl: 'pages/landing.html',
+		controller: 'landingController'
+	})
+	.otherwise({
+		redirectTo: '/landing'
 	});
 });
 
@@ -42,4 +49,19 @@ app.controller('queryController', function($scope) {
 
 app.controller('testingController', function($scope) {
 	$scope.message = 'Use this page to test the Particle API';
+});
+
+app.controller('landingController', function($scope){
+	$scope.message = 'Testing';
+	$scope.$on('$routeChangeSuccess', function(scope, next, current){
+		$(".parallax").clove({
+			property: "background-position-y",
+			min: 350,
+			max: 2000,
+			easing: function(x, t, b, c, d)
+			{
+				return x;
+			}
+		});
+	})
 });
