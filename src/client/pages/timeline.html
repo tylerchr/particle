@@ -1,0 +1,19 @@
+<!-- timeline.html -->
+<div class="container timeline-page">
+	<div class="main-sidebar">
+		<div class="data-point-large">
+			<span class="value">{{ today | date:'MMM d' }}</span>
+			<label>today</label>
+		</div>
+	</div>
+	<div class="main-content timeline-left">
+		<ul class="timeline">
+			<li ng-repeat="event in events">
+				<i class="timestamp">{{ event.date | date:'shortTime' }}</i>
+				<i class="marker"></i>
+				<strong>{{ event.title }}</strong>
+				<span>{{ event.message }}</span>
+			</li>
+		</ul>
+	</div>
+</div>

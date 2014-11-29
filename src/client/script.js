@@ -3,10 +3,9 @@ var app = angular.module('particleApp', []);
 var socket = io.connect();
 
 app.config(function($routeProvider) {
-	
 	$routeProvider.when('/', {
-		templateUrl: 'pages/home.html',
-		controller: 'mainController'
+		templateUrl: 'pages/timeline.html',
+		controller: 'timelineController'
 	})
 	.when('/data', {
 		templateUrl: 'pages/data.html',
@@ -29,8 +28,22 @@ app.config(function($routeProvider) {
 	});
 });
 
-app.controller('mainController', function($scope) {
-	$scope.message = 'Everyone come and see how good I look!';
+app.controller('timelineController', function($scope) {
+	$scope.message = 'Timeline!';
+
+	$scope.today = new Date();
+	$scope.events = [
+		{
+			date: new Date(1417304556280), // Nov 29, 4:42 pm
+			title: 'Listened to "Something I Need"',
+			message: 'OneRepublic, "Native"'
+		},
+		{
+			date: new Date(1417304382849), // Nov 29, 4:39 pm
+			title: 'Listened to "Bigger Than Love"',
+			message: 'My Favorite Highway, "How To Call A Bluff"'
+		}
+	];
 });
 
 app.controller('dataController', function($scope, $routeParams) {
