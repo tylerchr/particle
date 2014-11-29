@@ -18,7 +18,7 @@
 		"lastfm": "0.9.x"
 	},
 	"scripts": {
-		"start": "nodemon ./app.js",
+		"start": "node app.js",
 		"test": "mocha --reporter spec --recursive ./tests"
 	}
 }
