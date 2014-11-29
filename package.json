@@ -1,24 +1,27 @@
 {
-	"name": "particle-bin",
-	"description": "A platform for recording a little data",
-	"version": "0.0.1",
-	"private": true,
-	"dependencies": {
-		"express": "3.x",
-		"underscore": "1.x",
-		"git-rev": "0.2.x",
-		"mongodb": "1.3.x",
-		"request": "2.34.x",
-		"config": "0.4.x",
-		"js-yaml": "3.0.x",
-		"q": "1.0.x",
-		"socket.io": "0.9.x"
-	},
-	"devDependencies": {
-		"lastfm": "0.9.x"
-	},
-	"scripts": {
-		"start": "node app.js",
-		"test": "mocha --reporter spec --recursive ./tests"
-	}
+  "name": "particle-bin",
+  "description": "A platform for recording a little data",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "bluebird": "^2.3.11",
+    "config": "0.4.x",
+    "express": "3.x",
+    "git-rev": "0.2.x",
+    "js-yaml": "3.0.x",
+    "mongodb": "1.3.x",
+    "object-hash": "^0.3.0",
+    "porqpine": "^0.1.0",
+    "q": "1.0.x",
+    "request": "^2.34.0",
+    "socket.io": "^1.2.1",
+    "underscore": "1.x"
+  },
+  "devDependencies": {
+    "lastfm": "0.9.x"
+  },
+  "scripts": {
+    "start": "node app.js",
+    "test": "mocha --reporter spec --recursive ./tests"
+  }
 }

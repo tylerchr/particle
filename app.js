@@ -1,17 +1,16 @@
+// get started
+require('./bootstrap')();
+
 var express = require('express'),
 	git = require('git-rev'),
 	_ = require('underscore'),
 	socketio = require('socket.io'),
-	path = require('path');
+	path = require('path'),
+	http = require('http');
 
 git.short(function(rev) {
 	console.log('Current revision: ' + rev);
 });
-
-global.__paths = {
-	client: path.normalize(path.join(__dirname, './src/client')),
-	server: path.normalize(path.join(__dirname, './src/server'))
-};
 
 var app = express();
 app.configure(function() {
@@ -21,28 +20,30 @@ app.configure(function() {
 	app.use(express.static(__paths.client));
 });
 
-var port = 8080;
-var server = app.listen(port, function() {
+var port = 8080,
+	server = http.Server(app);
+
+server.listen(port, function() {
 	console.log('Server started on port ' + port);
 });
 
-// start up socketio
-var io = socketio.listen(server);
+var io = socketio(server);
 
 var iteration = 0;
 io.sockets.on('connection', function(socket) {
+
 	console.log('Somebody connected');
 
-	setInterval(function() {
+	// setInterval(function() {
 
-		socket.emit('data-count', {
-			count: iteration
-		});
-		socket.broadcast.emit('data-count', {
-			count: iteration
-		});
+	// 	socket.emit('data-count', {
+	// 		count: iteration
+	// 	});
+	// 	socket.broadcast.emit('data-count', {
+	// 		count: iteration
+	// 	});
 
-		iteration++;
+	// 	iteration++;
 
-	}, 500);
+	// }, 500);
 });
