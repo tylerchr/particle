@@ -161,7 +161,6 @@ $.getScript("lib/easings.js", function(){ // Might cause problems if this loads 
                 if(object.scrollOffscreen || object.thresholdFunction(element))
                 {
                     $(element).css(property, newValue);
-                    console.log("css changed to ", newValue);
                 }
             }
 
