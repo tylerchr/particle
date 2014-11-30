@@ -34,5 +34,47 @@ module.exports = {
 			.then(function(db) {
 				return db.collection('datapoints').insertAsync(dbDocument);
 			});
+	},
+	getDataPoints: function()
+	{
+		var today = new Date(),
+			tomorrow = new Date();
+		today.setHours(0, 0, 0);
+		today.setDate(tomorrow.getDate() - 10); // fudge the dates a bit for better data
+		tomorrow.setHours(0, 0, 0);
+		tomorrow.setDate(tomorrow.getDate() + 1);
+
+		console.log(today, tomorrow);
+
+		return porqpine.getDb('particle')
+			.then(function(db) {
+				return db.collection('datapoints')
+					.find({
+						"data.date": {
+							$gte: today,
+							$lt: tomorrow
+						}
+					})
+					.sort({ "data.date": -1})
+					.toArrayAsync();
+			})
+			.then(function(data) {
+				return data;
+			});
+	},
+	getTimelineData: function()
+	{
+		var lastfm = require(__paths.server.loaders + '/lastfm');
+
+		return module.exports.getDataPoints()
+			.then(function(points) {
+				return points.map(function(point) {
+					if (point.data.type === 'lastfm')
+					{
+						loader = lastfm;
+					}
+					return loader.formatForTimeline(point.data);
+				});
+			});
 	}
 };

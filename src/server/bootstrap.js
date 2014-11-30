@@ -9,8 +9,13 @@ module.exports = function()
 {
 	// set up some global paths
 	global.__paths = {
-		client: path.normalize(path.join(__dirname, './src/client')),
-		server: path.normalize(path.join(__dirname, './src/server'))
+		client: path.normalize(path.join(__dirname, '../client')),
+		server: {
+			base: path.normalize(path.join(__dirname)),
+			loaders: path.normalize(path.join(__dirname, './loaders')),
+			routes: path.normalize(path.join(__dirname, './routes')),
+			services: path.normalize(path.join(__dirname, './services'))
+		}
 	};
 
 	// connect to our Mongo instance

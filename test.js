@@ -1,7 +1,7 @@
 // get started
-require('./bootstrap')();
+require('./src/server/bootstrap')();
 
-var lastfm = require(__paths.server + '/loaders/lastfm.js');
+var lastfm = require(__paths.server.loaders + '/lastfm.js');
 
 lastfm.load('tylerchr')
 	.then(function() {

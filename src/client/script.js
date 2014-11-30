@@ -28,23 +28,30 @@ app.config(function($routeProvider) {
 	});
 });
 
-app.controller('timelineController', function($scope) {
+app.controller('timelineController', ['$scope', 'particleData', function($scope, particleData) {
 	$scope.message = 'Timeline!';
 
 	$scope.today = new Date();
-	$scope.events = [
-		{
-			date: new Date(1417304556280), // Nov 29, 4:42 pm
-			title: 'Listened to "Something I Need"',
-			message: 'OneRepublic, "Native"'
-		},
-		{
-			date: new Date(1417304382849), // Nov 29, 4:39 pm
-			title: 'Listened to "Bigger Than Love"',
-			message: 'My Favorite Highway, "How To Call A Bluff"'
-		}
-	];
-});
+	$scope.events = [];
+
+	particleData.getTimelineView()
+		.then(function(events) {
+			$scope.events = events;
+		});
+
+	// $scope.events = [
+	// 	{
+	// 		timestamp: new Date(1417304556280), // Nov 29, 4:42 pm
+	// 		title: 'Listened to "Something I Need"',
+	// 		message: 'OneRepublic, "Native"'
+	// 	},
+	// 	{
+	// 		timestamp: new Date(1417304382849), // Nov 29, 4:39 pm
+	// 		title: 'Listened to "Bigger Than Love"',
+	// 		message: 'My Favorite Highway, "How To Call A Bluff"'
+	// 	}
+	// ];
+}]);
 
 app.controller('dataController', function($scope, $routeParams) {
 	$scope.message = 'Look! I am a data page.';

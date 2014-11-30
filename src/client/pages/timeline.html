@@ -9,7 +9,7 @@
 	<div class="main-content timeline-left">
 		<ul class="timeline">
 			<li ng-repeat="event in events">
-				<i class="timestamp">{{ event.date | date:'shortTime' }}</i>
+				<i class="timestamp">{{ event.timestamp | date:'shortTime' }}</i>
 				<i class="marker"></i>
 				<strong>{{ event.title }}</strong>
 				<span>{{ event.message }}</span>

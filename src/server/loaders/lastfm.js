@@ -1,7 +1,7 @@
-var dataApi = require(__paths.server + '/services/data.js'),
+var dataApi = require(__paths.server.services + '/data.js'),
 	request = require('request'),
 	Promise = require('bluebird'),
-	userSettings = require(__paths.server + '/services/user-settings');
+	userSettings = require(__paths.server.services + '/user-settings');
 
 function retrievePage(user, apiKey, opt_page, opt_limit)
 {
@@ -26,6 +26,13 @@ module.exports = {
 			})
 			.then(function(tracks) {
 				return Promise.all(tracks.map(function(track) {
+
+					// no date, maybe it's still streaming
+					if (!track.date)
+					{
+						return Promise.resolve();
+					}
+
 					var date = new Date(parseInt(track.date.uts) * 1000),
 						payload = {
 							track: track.name,
@@ -48,5 +55,13 @@ module.exports = {
 			.catch(function(err) {
 				console.error('Could not retrieve page', err);
 			});
+	},
+	formatForTimeline: function(dataPoint)
+	{
+		return {
+			timestamp: dataPoint.date,
+			title: "Listened to \"" + dataPoint.payload.track + "\"",
+			message: dataPoint.payload.artist + ", \"" + dataPoint.payload.album + "\""
+		};
 	}
 };
