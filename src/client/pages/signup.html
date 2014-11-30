@@ -1,7 +1,7 @@
 <!-- signup.html -->
 <div class="container">
-	<div ng-if="errorMessage">
-		<p ng-repeat="error in errorMessages">{{ error }}</p>
+	<div class="errors" ng-if="errorMessages">
+		<p class="text-danger" ng-repeat="error in errorMessages">{{ error }}</p>
 	</div>
 	<div class="banner">
 		<div class="input-panel container">
