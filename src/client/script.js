@@ -23,6 +23,14 @@ app.config(function($routeProvider) {
 		templateUrl: 'pages/landing.html',
 		controller: 'landingController'
 	})
+	.when('/login', {
+		templateUrl: 'pages/login.html',
+		controller: 'loginController'
+	})
+	.when('/signup', {
+		templateUrl: 'pages/signup.html',
+		controller: 'signupController'
+	})
 	.otherwise({
 		redirectTo: '/landing'
 	});
@@ -113,4 +121,39 @@ app.controller('landingController', function($scope){
 			}
 		});
 	})
+});
+
+app.controller('loginController', function($scope){
+	$scope.login = function() {
+		alert("Not implemented");
+	}
+});
+
+app.controller('signupController', function($scope){
+	$scope.signup = function() {
+
+		// Validate Input
+		var email = $("#email").val();
+		var password = $("#password").val();
+		var verifyPassword = $("#verify-password").val();
+		var firstName = $("#first-name").val();
+		var lastName = $("#last-name").val();
+		$scope.errorMessages = [];
+
+		if (email == "" || password == "" || verifyPassword == "" || firstName == "" || lastName == "")
+		{
+			$scope.errorMessages[$scope.errorMessages.length] = "Some required fields are missing";
+		}
+
+		if ( password !== verifyPassword)
+		{
+			$scope.errorMessages[$scope.errorMessages.length] = "Password do not match!";
+		}
+
+		// Check if user exists
+		// Create user
+		
+		alert("Not Implemented");
+
+	}
 });

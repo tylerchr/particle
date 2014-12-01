@@ -152,13 +152,33 @@ form.testing #music-group input {
 	margin-bottom: 12px;
 }
 
-.landing-panel {
+.banner {
 	width: 100%;
 	height: 400px;
+	vertical-align: middle;
 }
 
 .parallax {
 
+}
+
+.errors {
+	text-align: center;
+}
+
+.input-panel {
+	position: relative;
+	text-align: center;
+	width: 400px;
+	top: 50px;
+}
+
+.input-panel button {
+	width: 100px;
+}
+
+.input-panel div {
+	margin: 4px;
 }
 
 .timeline-left {
