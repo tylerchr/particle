@@ -1,35 +1,35 @@
 <!-- signup.html -->
 <div class="container">
-	<div class="errors" ng-if="errorMessages">
+	<div class="errors alert alert-danger" ng-show="errorMessages.length > 0">
 		<p class="text-danger" ng-repeat="error in errorMessages">{{ error }}</p>
 	</div>
 	<div class="banner">
 		<div class="input-panel container">
 			<div class="input-group">
 				<span class="input-group-addon"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span></span>
-				<input id="email" type="text" class="form-control" placeholder="Email">
+				<input id="email" type="text" class="form-control" placeholder="Email" ng-model="email">
 			</div>
 
 			<div class="input-group">
 				<span class="input-group-addon"><span class="glyphicon glyphicon-asterisk" aria-hidden="true"></span></span>
-				<input id="password" type="password" class="form-control" placeholder="Password">
+				<input id="password" type="password" class="form-control" placeholder="Password" ng-model="password">
 			</div>
 
 			<div class="input-group">
 				<span class="input-group-addon"><span class="glyphicon glyphicon-asterisk" aria-hidden="true"></span></span>
-				<input id="verify-password" type="password" class="form-control" placeholder="Veirfy Password">
+				<input id="verify-password" type="password" class="form-control" placeholder="Veirfy Password" ng-model="verifyPassword">
 			</div>
 
 			<br />
 
 			<div class="input-group">
 				<span class="input-group-addon"></span>
-				<input id="first-name" type="text" class="form-control" placeholder="First Name">
+				<input id="first-name" type="text" class="form-control" placeholder="First Name" ng-model="firstname">
 			</div>
 
 			<div class="input-group">
 				<span class="input-group-addon"></span>
-				<input id="last-name" type="text" class="form-control" placeholder="Last Name">
+				<input id="last-name" type="text" class="form-control" placeholder="Last Name" ng-model="lastname">
 			</div>
 
 			<button type="button" class="btn btn-primary" ng-click="signup()">Submit</button><br />

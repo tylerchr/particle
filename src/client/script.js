@@ -100,31 +100,54 @@ app.controller('loginController', function($scope){
 	}
 });
 
-app.controller('signupController', function($scope){
+app.controller('signupController', function($scope, $http){
+
+
 	$scope.signup = function() {
 
 		// Validate Input
-		var email = $("#email").val();
-		var password = $("#password").val();
-		var verifyPassword = $("#verify-password").val();
-		var firstName = $("#first-name").val();
-		var lastName = $("#last-name").val();
 		$scope.errorMessages = [];
 
-		if (email == "" || password == "" || verifyPassword == "" || firstName == "" || lastName == "")
+		if (!$scope.email || !$scope.password || !$scope.verifyPassword || !$scope.firstname || !$scope.lastname)
 		{
-			$scope.errorMessages[$scope.errorMessages.length] = "Some required fields are missing";
+			$scope.errorMessages.push("Some required fields are missing");
 		}
 
-		if ( password !== verifyPassword)
+		if ( $scope.password !== $scope.verifyPassword)
 		{
-			$scope.errorMessages[$scope.errorMessages.length] = "Password do not match!";
+			$scope.errorMessages.push("Password do not match!");
 		}
 
-		// Check if user exists
+		if ($scope.errorMessages.length > 0)
+		{
+			return;
+		}
+
 		// Create user
+		var userData = {
+			"username": $scope.email,
+			"password": CryptoJS.SHA1($scope.password).toString(CryptoJS.enc.Hex),
+			"firstname": $scope.firstName,
+			"lastname": $scope.lastName
+		};
+
+		var responsePromise = $http.post("/api/v1/user", userData);
+
+		responsePromise.success(function(data, status, headers, config) {
+			if(data === "success")
+			{
+				window.location = "/#";
+			}
+			else {
+				$scope.errorMessages.push(data);
+			}
+		});
 		
-		alert("Not Implemented");
+		responsePromise.error(function(data, status, headers, config) {
+			alert(data, status, headers);
+		});
+
+		//alert("Not Implemented");
 
 	}
 });

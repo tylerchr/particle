@@ -22,7 +22,9 @@ app.use(express.static(__paths.client));
 
 // set up some routes
 var dataRoutes = require(__paths.server.routes + '/data-routes');
+var userRoutes = require(__paths.server.routes + '/user-routes');
 app.use('/api/v1', dataRoutes);
+app.use('/api/v1', userRoutes);
 
 var port = 8080,
 	server = http.Server(app);

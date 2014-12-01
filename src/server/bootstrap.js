@@ -28,7 +28,10 @@ module.exports = function()
 	// ensure we have a unique index on datapoints.hash
 	porqpine.getDb('particle')
 		.then(function(db) {
-			return db.collection('datapoints').ensureIndexAsync('hash', { unique: true });
+			return db.collection('datapoints').ensureIndexAsync('hash', { unique: true })
+				.then(function(){
+					return db.collection('users').ensureIndexAsync('username', {unique: true});
+				});
 		});
 
 };
