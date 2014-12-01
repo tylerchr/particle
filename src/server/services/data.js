@@ -35,24 +35,17 @@ module.exports = {
 				return db.collection('datapoints').insertAsync(dbDocument);
 			});
 	},
-	getDataPoints: function()
+	getDataPoints: function(startDate, endDate)
 	{
-		var today = new Date(),
-			tomorrow = new Date();
-		today.setHours(0, 0, 0);
-		today.setDate(tomorrow.getDate() - 10); // fudge the dates a bit for better data
-		tomorrow.setHours(0, 0, 0);
-		tomorrow.setDate(tomorrow.getDate() + 1);
-
-		console.log(today, tomorrow);
+		console.log(startDate, endDate);
 
 		return porqpine.getDb('particle')
 			.then(function(db) {
 				return db.collection('datapoints')
 					.find({
 						"data.date": {
-							$gte: today,
-							$lt: tomorrow
+							$gte: startDate,
+							$lt: endDate
 						}
 					})
 					.sort({ "data.date": -1})
@@ -62,11 +55,11 @@ module.exports = {
 				return data;
 			});
 	},
-	getTimelineData: function()
+	getTimelineData: function(startDate, endDate)
 	{
 		var lastfm = require(__paths.server.loaders + '/lastfm');
 
-		return module.exports.getDataPoints()
+		return module.exports.getDataPoints(startDate, endDate)
 			.then(function(points) {
 				return points.map(function(point) {
 					if (point.data.type === 'lastfm')
