@@ -2,18 +2,33 @@
 <div class="container timeline-page">
 	<div class="main-sidebar">
 		<div class="data-point-large">
-			<span class="value">{{ today | date:'MMM d' }}</span>
+			<span class="value">{{ date | date:'MMM d' }}</span>
 			<label>today</label>
 		</div>
 	</div>
-	<div class="main-content timeline-left">
-		<ul class="timeline">
-			<li ng-repeat="event in events">
-				<i class="timestamp">{{ event.timestamp | date:'shortTime' }}</i>
-				<i class="marker"></i>
-				<strong>{{ event.title }}</strong>
-				<span>{{ event.message }}</span>
-			</li>
-		</ul>
+	<div class="main-content">
+		<div class="nav-buttons">
+			<a ng-class="{'disabled': currentlyLoading}" ng-click="previousDay()">
+				<i class="glyphicon glyphicon-chevron-left"></i> Previous Day
+			</a>
+			<a ng-class="{'disabled': currentlyLoading}" ng-click="toToday()">Today</a>
+			<a ng-class="{'disabled': currentlyLoading}" ng-click="nextDay()">
+				Next Day
+				<i class="glyphicon glyphicon-chevron-right"></i>
+			</a>
+		</div>
+		<div ng-show="!events.length" class="no-events">
+			There are no events for this time period.
+		</div>
+		<div class="timeline-left" ng-show="events">
+			<ul class="timeline">
+				<li ng-repeat="event in events">
+					<i class="timestamp">{{ event.timestamp | date:'shortTime' }}</i>
+					<i class="marker"></i>
+					<strong>{{ event.title }}</strong>
+					<span>{{ event.message }}</span>
+				</li>
+			</ul>
+		</div>
 	</div>
 </div>

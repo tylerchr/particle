@@ -31,26 +31,55 @@ app.config(function($routeProvider) {
 app.controller('timelineController', ['$scope', 'particleData', function($scope, particleData) {
 	$scope.message = 'Timeline!';
 
-	$scope.today = new Date();
+	$scope.currentlyLoading = false;
 	$scope.events = [];
+	$scope.date = getMidnight();
 
-	particleData.getTimelineView()
-		.then(function(events) {
-			$scope.events = events;
-		});
+	reloadData();
 
-	// $scope.events = [
-	// 	{
-	// 		timestamp: new Date(1417304556280), // Nov 29, 4:42 pm
-	// 		title: 'Listened to "Something I Need"',
-	// 		message: 'OneRepublic, "Native"'
-	// 	},
-	// 	{
-	// 		timestamp: new Date(1417304382849), // Nov 29, 4:39 pm
-	// 		title: 'Listened to "Bigger Than Love"',
-	// 		message: 'My Favorite Highway, "How To Call A Bluff"'
-	// 	}
-	// ];
+	function getMidnight(opt_date)
+	{
+		opt_date = opt_date || (new Date());
+		opt_date.setHours(0, 0, 0);
+		return opt_date;
+	};
+
+	function reloadData()
+	{
+		$scope.currentlyLoading = true;
+		particleData.getTimelineView($scope.date)
+			.then(function(events) {
+				$scope.events = events;
+				$scope.currentlyLoading = false;
+			});
+	}
+
+	$scope.previousDay = function()
+	{
+		if (!$scope.currentlyLoading)
+		{
+			$scope.date.setDate($scope.date.getDate() - 1);
+			reloadData();
+		}
+	};
+	$scope.nextDay = function()
+	{
+		if (!$scope.currentlyLoading)
+		{
+			$scope.date.setDate($scope.date.getDate() + 1);
+			reloadData();
+		}
+	};
+
+	$scope.toToday = function()
+	{
+		if (!$scope.currentlyLoading)
+		{
+			$scope.date = getMidnight();
+			reloadData();
+		}
+	};
+
 }]);
 
 app.controller('dataController', function($scope, $routeParams) {

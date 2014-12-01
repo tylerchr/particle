@@ -162,6 +162,9 @@ form.testing #music-group input {
 }
 
 .timeline-left {
+	margin-top: 10px;
+	padding-top: 10px;
+	padding-bottom: 10px;
 	border-left: 1px solid #ccc;
 }
 
@@ -212,4 +215,41 @@ form.testing #music-group input {
 	list-style-type: none;
 	margin: 0;
 	padding: 0;
+}
+
+.timeline-page .nav-buttons {
+	border-bottom: 1px solid #eee;
+	clear: both;
+	overflow: hidden;
+	text-align: center;
+}
+.timeline-page .nav-buttons a {
+	color: #ccc;
+	padding: 0 0 12px 0;
+	-webkit-user-select: none;
+	user-select: none;
+}
+.timeline-page .nav-buttons a:first-child {
+	float: left;
+}
+.timeline-page .nav-buttons a:last-child {
+	text-align: right;
+	float: right;
+}
+.timeline-page .nav-buttons a:hover {
+	cursor: pointer;
+	color: #2a6496;
+	text-decoration: none;
+}
+
+.timeline-page .no-events {
+	margin-top: 64px;
+	margin-bottom: 64px;
+	text-align: center;
+	color: gray;
+}
+
+footer .container {
+	border-top: 1px solid #eee;
+	padding-top: 12px;
 }
