@@ -7,7 +7,9 @@ var express = require('express'),
 	_ = require('underscore'),
 	socketio = require('socket.io'),
 	path = require('path'),
-	http = require('http');
+	http = require('http'),
+	cookieParser = require('cookie-parser'),
+	session = require('express-session');
 
 git.short(function(rev) {
 	console.log('Current revision: ' + rev);
@@ -19,6 +21,11 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 console.log(__paths.client);
 app.use(express.static(__paths.client));
+
+app.use(cookieParser());
+app.use(session({secret : 'TYLERISAFATPIG',
+				saveUninitialized: true,
+                resave: true}));
 
 // set up some routes
 var dataRoutes = require(__paths.server.routes + '/data-routes');

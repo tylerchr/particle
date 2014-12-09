@@ -30,7 +30,7 @@ module.exports = function()
 		.then(function(db) {
 			return db.collection('datapoints').ensureIndexAsync('hash', { unique: true })
 				.then(function(){
-					return db.collection('users').ensureIndexAsync('username', {unique: true});
+					return db.collection('users').ensureIndexAsync('email', {unique: true});
 				});
 		});
 

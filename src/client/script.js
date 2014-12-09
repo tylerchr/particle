@@ -170,7 +170,7 @@ app.controller('signupController', function($scope, $http){
 
 		// Create user
 		var userData = {
-			"username": $scope.email,
+			"email": $scope.email,
 			"password": $scope.password,
 			"firstname": $scope.firstname,
 			"lastname": $scope.lastname

@@ -18,10 +18,10 @@ module.exports = {
 		return tokens[token];
 	},
 
-	getUser: function(userName) {
+	getUser: function(email) {
 		return porqpine.getDb('particle')
 			.then(function(db) {
-				return db.collection('users').find({ username: userName }).toArrayAsync();
+				return db.collection('users').find({ email: email }).toArrayAsync();
 			})
 			.then(function(data) {
 				return data;

@@ -4,7 +4,7 @@ var router = require('express').Router({ mergeParams: true }),
 
 router.post('/user', function(req, res) {
 
-	var username = req.param("username");
+	var email = req.param("email");
 	var password = req.param("password");
 	var lastname = req.param("lastname");
 	var firstname = req.param("firstname");
@@ -14,20 +14,25 @@ router.post('/user', function(req, res) {
 	var encryptedPassword = (shasum.digest('hex').toString());
 
 	var user = {
-		"username" : username,
+		"email" : email,
 		"password" : encryptedPassword,
 		"lastname" : lastname,
 		"firstname" : firstname
 	};
 
-	userApi.getUser(username)
+	userApi.getUser(email)
 		.then(function(data){
 			if (data.length < 1) // No users with that name / email exist, proceed with creating the new user 
 			{
 				var response = userApi.addUser(user)
 					.then(function(data){
-						var token = userApi.createToken(username);
-						res.cookie('authToken', token, { maxAge: 3600, httpOnly: true});
+
+						req.session.loggedInUser = {
+							"email" : data[0].email,
+							"firstname" : data[0].firstname,
+							"lastname" : data[0].lastname
+						};
+
 						res.status(200).send("success");
 					})
 					.catch(function(err){
@@ -53,14 +58,17 @@ router.post('/login', function(req, res) {
 	shasum.update(password);
 	var encryptedPassword = (shasum.digest('hex').toString());
 
-
 	userApi.getUser(email)
 		.then(function(data) {
 
-			console.log(encryptedPassword, password)
-
 			if (encryptedPassword == data[0].password)
 			{
+				req.session.loggedInUser = {
+					"email" : data[0].email,
+					"firstname" : data[0].firstname,
+					"lastname" : data[0].lastname
+				};
+
 				res.redirect("/#");		
 			}
 			else
@@ -69,6 +77,19 @@ router.post('/login', function(req, res) {
 			}
 
 		});
+
+});
+
+router.get('/logout', function(req, res) {
+
+	if (req.session.loggedInUser)
+	{
+		console.log(req.session.loggedInUser);
+	}
+
+	req.session.loggedInUser = null;
+
+	res.redirect("/#");
 
 });
 
