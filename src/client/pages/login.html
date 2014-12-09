@@ -1,17 +1,30 @@
 <!-- login.html -->
-<div class="banner">
-	<div class="input-panel container">
-		<div class="input-group">
-			<span class="input-group-addon"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span></span>
-			<input type="text" class="form-control" placeholder="Email">
-		</div>
 
-		<div class="input-group">
-		  <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk" aria-hidden="true"></span></span>
-		  <input type="password" class="form-control" placeholder="Password">
-		</div>
+<div class="container">
 
-		<button type="button" class="btn btn-primary" ng-click="login()">Login</button><br />
-		Not a member? <a href="#signup">Sign up</a>
+	<div class="errors alert alert-danger" ng-show="errorMessages.length > 0">
+		<p class="text-danger" ng-repeat="error in errorMessages">{{ error }}</p>
 	</div>
+
+	<div class="banner">
+
+		<div class="input-panel container">
+			<form method="POST" action="/api/v1/login" name="loginForm">
+				<div class="input-group">
+					<span class="input-group-addon"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span></span>
+					<input type="text" class="form-control" placeholder="Email" ng-model="email" name="email">
+				</div>
+
+				<div class="input-group">
+				  <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk" aria-hidden="true"></span></span>
+				  <input type="password" class="form-control" placeholder="Password" ng-model="password" name="password">
+				</div>
+
+				<button type="button" class="btn btn-primary" ng-click="login()">Login</button><br />
+				Not a member? <a href="#signup">Sign up</a>
+			</form>
+		</div>
+		
+	</div>
+
 </div>

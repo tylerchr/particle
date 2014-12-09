@@ -125,7 +125,23 @@ app.controller('landingController', function($scope){
 
 app.controller('loginController', function($scope){
 	$scope.login = function() {
-		alert("Not implemented");
+
+		$scope.errorMessages = [];
+
+		if(!$scope.email || !$scope.password)
+		{
+			$scope.errorMessages.push("Some required fields are missing");
+		}
+
+		if ($scope.errorMessages.length > 0)
+		{
+			return;
+		}
+		
+
+		document.forms.loginForm.submit();
+
+		
 	}
 });
 
@@ -155,9 +171,9 @@ app.controller('signupController', function($scope, $http){
 		// Create user
 		var userData = {
 			"username": $scope.email,
-			"password": CryptoJS.SHA1($scope.password).toString(CryptoJS.enc.Hex),
-			"firstname": $scope.firstName,
-			"lastname": $scope.lastName
+			"password": $scope.password,
+			"firstname": $scope.firstname,
+			"lastname": $scope.lastname
 		};
 
 		var responsePromise = $http.post("/api/v1/user", userData);
@@ -175,8 +191,6 @@ app.controller('signupController', function($scope, $http){
 		responsePromise.error(function(data, status, headers, config) {
 			alert(data, status, headers);
 		});
-
-		//alert("Not Implemented");
 
 	}
 });
