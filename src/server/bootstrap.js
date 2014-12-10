@@ -9,6 +9,7 @@ module.exports = function()
 {
 	// set up some global paths
 	global.__paths = {
+		common: path.normalize(path.join(__dirname, '../common')),
 		client: path.normalize(path.join(__dirname, '../client')),
 		server: {
 			base: path.normalize(path.join(__dirname)),

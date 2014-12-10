@@ -11,9 +11,24 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
 		<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 		<script src="/socket.io/socket.io.js"></script>
-		<script src="script.js"></script>
-		<script src="services/particle-data.js"></script>
+		<script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/sha1.js"></script>
 		<script src="/common/lib/clove.js"></script>
+		<script src="script.js"></script>
+		<script type="text/javascript">
+
+			$(document).ready(function(){
+				$(".parallax").clove({
+					property: "background-position-y",
+					min: 350,
+					max: 2000,
+					easing: function(x, t, b, c, d)
+					{
+						return x;
+					}
+				});
+			});
+
+		</script>
 
 		<meta name="apple-mobile-web-app-capable" content="yes" />
 	</head>
@@ -26,25 +41,15 @@
 						<a class="navbar-brand" href="/">Particle</a>
 					</div>
 
-					<ul class="nav navbar-nav navbar-left">
-						<li><a href="#"><i class="fa fa-home"></i> Timeline</a></li>
-						<li><a href="#data"><i class="fa fa-cloud"></i> Data</a></li>
-						<li><a href="#query"><i class="fa fa-terminal"></i> Query</a></li>
-						<li><a href="#testing"><i class="fa fa-bug"></i> Testing</a></li>
-					</ul>
-
 					<ul class="nav navbar-nav navbar-right">
-						<li><a onclick="location.reload()"><i class="fa fa-refresh"></i> Reload</a></li>
-						<li><a href="/api/v1/logout"> Logout</a></li>
-						<li><img class="avatar" src="http://www.gravatar.com/avatar/aaac12635cccc90b2aaa0186fdd7a971.jpg?s=28" /></li>
+						<li><a href="/common/#login"><i class="fa fa-home"></i> Login</a></li>
+						<li><a href="/common/#signup"><i class="fa fa-cloud"></i> Signup</a></li>
 					</ul>
 				</div>
 			</nav>
 			<nav class="navbar navbar-bottom navbar-default">
 				<div class="container">
-					<div class="navbar-header navbar-message">
-						You have 7 notifications
-					</div>
+					<div class="navbar-header navbar-message"></div>
 				</div>
 			</nav>
 		</header>

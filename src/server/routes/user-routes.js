@@ -61,7 +61,7 @@ router.post('/login', function(req, res) {
 	userApi.getUser(email)
 		.then(function(data) {
 
-			if (encryptedPassword == data[0].password)
+			if (data[0] && encryptedPassword == data[0].password)
 			{
 				req.session.loggedInUser = {
 					"email" : data[0].email,
@@ -69,11 +69,11 @@ router.post('/login', function(req, res) {
 					"lastname" : data[0].lastname
 				};
 
-				res.redirect("/#");		
+				res.redirect("/app/#");		
 			}
 			else
 			{
-				res.redirect("/#/login?status=0");
+				res.redirect("/common/#/login?error=invalid");
 			}
 
 		});
@@ -89,7 +89,7 @@ router.get('/logout', function(req, res) {
 
 	req.session.loggedInUser = null;
 
-	res.redirect("/#");
+	res.redirect("/common/#");
 
 });
 

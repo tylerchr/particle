@@ -2,7 +2,11 @@
 
 <div class="container">
 
-	<div class="errors alert alert-danger" ng-show="errorMessages.length > 0">
+	<div class="alert alert-info" ng-show="infoMessage">
+		<p class="text-info">{{ infoMessage }}</p>
+	</div>
+
+	<div class="alert alert-danger" ng-show="errorMessages.length > 0">
 		<p class="text-danger" ng-repeat="error in errorMessages">{{ error }}</p>
 	</div>
 
