@@ -38,8 +38,11 @@ app.use(session({secret : 'TYLERISAFATPIG',
 				saveUninitialized: true,
                 resave: true}));
 
-app.use('/common', express.static(__paths.common));
+app.get('/', function(req, res){
+	res.redirect('/common');
+});
 
+app.use('/common', express.static(__paths.common));
 app.use('/app', checkAuth);
 app.use('/app', express.static(__paths.client));
 
