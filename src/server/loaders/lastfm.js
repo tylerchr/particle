@@ -20,7 +20,7 @@ function retrievePage(user, apiKey, opt_page, opt_limit)
 module.exports = {
 	load: function(user)
 	{
-		return userSettings.getSettings('tylerchr', 'lastfm')
+		return userSettings.getSettings(user, 'lastfm')
 			.then(function(settings) {
 				return retrievePage(settings.username, settings.apiKey, 1, 200)
 			})

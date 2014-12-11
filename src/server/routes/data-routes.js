@@ -25,7 +25,8 @@ router.get('/timeline', function(req, res) {
 		endDate.setDate(endDate.getDate() + 1);
 	}
 
-	dataApi.getTimelineData(startDate, endDate)
+	var currentUser = req.session.loggedInUser.email;
+	dataApi.getTimelineData(currentUser, startDate, endDate)
 		.then(function(points) {
 			res.status(200).send(points);
 		})

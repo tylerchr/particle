@@ -16,7 +16,7 @@ api.events.on('add', function(namespace) {
 
 var iteration = 0;
 setInterval(function() {
-	
+
 	iteration++;
 
 	var current_date = (new Date()).valueOf().toString();

@@ -36,7 +36,7 @@ module.exports = {
 				return db.collection('datapoints').insertAsync(dbDocument);
 			});
 	},
-	getDataPoints: function(startDate, endDate)
+	getDataPoints: function(user, startDate, endDate)
 	{
 		console.log(startDate, endDate);
 
@@ -44,6 +44,7 @@ module.exports = {
 			.then(function(db) {
 				return db.collection('datapoints')
 					.find({
+						"owner": user,
 						"data.date": {
 							$gte: startDate,
 							$lt: endDate
@@ -56,11 +57,11 @@ module.exports = {
 				return data;
 			});
 	},
-	getTimelineData: function(startDate, endDate)
+	getTimelineData: function(user, startDate, endDate)
 	{
 		var lastfm = require(__paths.server.loaders + '/lastfm');
 
-		return module.exports.getDataPoints(startDate, endDate)
+		return module.exports.getDataPoints(user, startDate, endDate)
 			.then(function(points) {
 				return points.map(function(point) {
 					return loader.getLoader(point.data.type).formatForTimeline(point.data);

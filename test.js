@@ -9,7 +9,7 @@ require('./src/server/bootstrap')();
 // 	});
 
 var loaders = require(__paths.server.loaders);
-loaders.getLoader('timeclock').load('tylerchr')
+loaders.getLoader('lastfm').load('tyson.decker@gmail.com')
 	.then(function() {
 		console.log('Done!');
 	});
