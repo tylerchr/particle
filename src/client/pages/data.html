@@ -14,17 +14,10 @@
 					<span class="table-column-header">Namespace</span>
 					<span class="table-column-header right">Data points</span>
 				</li>
-				<li>
-					<span class="data-value">1237</span>
-					<span class="data-title">life.entertainment.music.song</span>
-					<span class="data-summary">Last song: <i>Chocolate</i> by <i>The 1975</i>; 401 total listens</span>
-					<span class="data-meta">1 minute ago — 3 days ago</span>
-				</li>
-				<li>
-					<span class="data-value">192</span>
-					<span class="data-title">life.transport.location</span>
-					<span class="data-summary">Most frequent location today: <i>Lynndyl, Utah</i> (3 total visits)</span>
-					<span class="data-meta">47 minutes ago — 7 months ago</span>
+				<li ng-repeat="item in counts">
+					<span class="data-value">{{ item.count }}</span>
+					<span class="data-title">{{ item.type }}</span>
+					<span class="data-meta">{{ item.dates.earliest | amDateFormat:'MMMM Do YYYY'}} - {{ item.dates.latest | amDateFormat:'MMMM Do YYYY'}}</span>
 				</li>
 			</ul>
 		</div>
