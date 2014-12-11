@@ -4,15 +4,22 @@ var router = require('express').Router({ mergeParams: true }),
 
 router.get('/user', function(req, res) {
 
-	var currentUser = req.session.loggedInUser;
-	var hashedEmail = crypto.createHash('md5').update(currentUser.email).digest('hex');
+	if (req.session.loggedInUser)
+	{
+		var currentUser = req.session.loggedInUser;
+		var hashedEmail = crypto.createHash('md5').update(currentUser.email).digest('hex');
 
-	res.status(200).send({
-		email: currentUser.email,
-		hashedEmail: hashedEmail,
-		firstname: currentUser.firstname,
-		lastname: currentUser.lastname
-	});
+		res.status(200).send({
+			email: currentUser.email,
+			hashedEmail: hashedEmail,
+			firstname: currentUser.firstname,
+			lastname: currentUser.lastname
+		});
+	}
+	else
+	{
+		res.status(401).send();
+	}
 });
 
 router.post('/user', function(req, res) {

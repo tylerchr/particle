@@ -5,7 +5,7 @@ var express = require('express'),
 	bodyParser = require('body-parser'),
 	git = require('git-rev'),
 	_ = require('underscore'),
-	socketio = require('socket.io'),
+	socketManager = require(__paths.server.services + '/socket-manager'),
 	path = require('path'),
 	http = require('http'),
 	cookieParser = require('cookie-parser'),
@@ -59,23 +59,4 @@ server.listen(port, function() {
 	console.log('Server started on port ' + port);
 });
 
-var io = socketio(server);
-
-var iteration = 0;
-io.sockets.on('connection', function(socket) {
-
-	console.log('Somebody connected');
-
-	// setInterval(function() {
-
-	// 	socket.emit('data-count', {
-	// 		count: iteration
-	// 	});
-	// 	socket.broadcast.emit('data-count', {
-	// 		count: iteration
-	// 	});
-
-	// 	iteration++;
-
-	// }, 500);
-});
+socketManager.init(server);

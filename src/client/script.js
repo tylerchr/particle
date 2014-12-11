@@ -1,7 +1,5 @@
 var app = angular.module('particleApp', ['ngRoute', 'btford.socket-io']);
 
-var socket = io.connect();
-
 app.config(function($routeProvider) {
 	$routeProvider.when('/', {
 		templateUrl: 'pages/timeline.html',
@@ -28,68 +26,109 @@ app.config(function($routeProvider) {
 	});
 });
 
-app.controller('timelineController', ['$scope', 'particleData', function($scope, particleData) {
-	$scope.message = 'Timeline!';
+app.factory('socketChannel', function(socketFactory) {
+  return socketFactory();
+});
 
-	$scope.currentlyLoading = false;
-	$scope.events = [];
-	$scope.date = getMidnight();
+app.controller('particleHeader', [
+	'$scope',
+	'particleData',
+	'socketChannel',
+	function($scope, particleData, socketChannel) {
 
-	reloadData();
+		// prepare for our imminent user challenge thingy
+		socketChannel.on('user-challenge', function() {
+			particleData.getCurrentUser()
+				.then(function(user) {
+					socketChannel.emit('user-challenge-response', user);
+				});
+		});
 
-	function getMidnight(opt_date)
-	{
-		opt_date = opt_date || (new Date());
-		opt_date.setHours(0, 0, 0);
-		return opt_date;
-	};
-
-	function reloadData()
-	{
-		$scope.currentlyLoading = true;
-		particleData.getTimelineView($scope.date)
-			.then(function(events) {
-				$scope.events = events;
-				$scope.currentlyLoading = false;
+		$scope.currentUser = {};
+		particleData.getCurrentUser()
+			.then(function(user) {
+				$scope.currentUser = user;
 			});
+
 	}
+]);
 
-	$scope.previousDay = function()
-	{
-		if (!$scope.currentlyLoading)
-		{
-			$scope.date.setDate($scope.date.getDate() - 1);
-			reloadData();
-		}
-	};
-	$scope.nextDay = function()
-	{
-		if (!$scope.currentlyLoading)
-		{
-			$scope.date.setDate($scope.date.getDate() + 1);
-			reloadData();
-		}
-	};
+app.controller('timelineController', [
+	'$scope',
+	'particleData',
+	'socketChannel',
+	function($scope, particleData, socketChannel) {
+		$scope.message = 'Timeline!';
 
-	$scope.toToday = function()
-	{
-		if (!$scope.currentlyLoading)
-		{
-			$scope.date = getMidnight();
-			reloadData();
-		}
-	};
+		$scope.currentlyLoading = false;
+		$scope.events = [];
+		$scope.date = getMidnight();
 
-}]);
+		// send the server a message
+		socketChannel.emit('message', {
+			hello: 'world',
+			timestamp: new Date()
+		});
+
+		socketChannel.on('heartbeat', function() {
+			console.log('received a heartbeat');
+		});
+
+		reloadData();
+
+		function getMidnight(opt_date)
+		{
+			opt_date = opt_date || (new Date());
+			opt_date.setHours(0, 0, 0);
+			return opt_date;
+		};
+
+		function reloadData()
+		{
+			$scope.currentlyLoading = true;
+			particleData.getTimelineView($scope.date)
+				.then(function(events) {
+					$scope.events = events;
+					$scope.currentlyLoading = false;
+				});
+		}
+
+		$scope.previousDay = function()
+		{
+			if (!$scope.currentlyLoading)
+			{
+				$scope.date.setDate($scope.date.getDate() - 1);
+				reloadData();
+			}
+		};
+		$scope.nextDay = function()
+		{
+			if (!$scope.currentlyLoading)
+			{
+				$scope.date.setDate($scope.date.getDate() + 1);
+				reloadData();
+			}
+		};
+
+		$scope.toToday = function()
+		{
+			if (!$scope.currentlyLoading)
+			{
+				$scope.date = getMidnight();
+				reloadData();
+			}
+		};
+	}
+]);
 
 app.controller('dataController', function($scope, $routeParams) {
 	$scope.message = 'Look! I am a data page.';
 	$scope.ticker = 0;
 
-	socket.on('data-count', function(data) {
-		$scope.ticker = data.count;
-		$scope.$apply();
-	});
+	// socket.on('data-count', function(data) {
+	// 	$scope.ticker = data.count;
+	// 	$scope.$apply();
+	// });
 })
 
 app.controller('queryController', function($scope) {
@@ -114,17 +153,3 @@ app.controller('landingController', function($scope){
 		});
 	})
 });
-
-app.controller('particleHeader', [
-	'$scope',
-	'particleData',
-	function($scope, particleData) {
-
-		$scope.currentUser = {};
-		particleData.getCurrentUser()
-			.then(function(user) {
-				$scope.currentUser = user;
-			});
-
-	}
-]);
