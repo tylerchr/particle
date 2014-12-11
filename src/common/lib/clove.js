@@ -140,8 +140,6 @@ $.getScript("lib/easings.js", function(){ // Might cause problems if this loads 
         scrollTop: 0,
         scroll: function(e) {
 
-            console.log("scroll");
-
             var difference = this.scrollTop - $(window).scrollTop();
             this.scrollTop = $(window).scrollTop();
 
