@@ -25,8 +25,9 @@ app.controller('landingController', function($scope){
 	$scope.$on('$routeChangeSuccess', function(scope, next, current){
 		$(".parallax").clove({
 			property: "background-position-y",
-			min: 350,
-			max: 2000,
+			min: -90,
+			max: 1000,
+			initialY: -200,
 			easing: function(x, t, b, c, d)
 			{
 				return x;
