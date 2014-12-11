@@ -19,7 +19,15 @@ angular.module('particleApp')
 					.then(function(response) {
 						return response.data;
 					});
+			},
+			sendClick: function()
+			{
+				return $http.get('/api/v1/click')
+					.then(function(response) {
+						return response.data;
+					});
 			}
+
 		};
 
 	}]);

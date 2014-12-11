@@ -96,8 +96,13 @@ app.controller('queryController', function($scope) {
 	$scope.message = 'Contact us! Jk this is just a demo';
 });
 
-app.controller('testingController', function($scope) {
+app.controller('testingController', function($scope, particleData) {
 	$scope.message = 'Use this page to test the Particle API';
+	$scope.sendClick = function()
+	{
+		console.log("Click Sent!!");
+		particleData.sendClick();
+	}
 });
 
 app.controller('landingController', function($scope){
