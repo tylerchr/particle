@@ -57,6 +57,45 @@ module.exports = {
 				return data;
 			});
 	},
+	countDataPoints: function(user)
+	{
+		return porqpine.getDb('particle')
+			.then(function(db) {
+				return db.collection('datapoints')
+					.groupAsync({
+						"data.type": 1
+					},
+					{
+						"owner": user
+					},
+					{
+						count: 0,
+						dates: {
+							earliest: 0,
+							latest: 0
+						}
+
+					},
+					function(obj, prev) {
+						prev.count++;
+						if (!prev.dates.earliest || obj.data.date < prev.dates.earliest)
+							prev.dates.earliest = obj.data.date;
+						if (!prev.dates.latest || obj.data.date > prev.dates.latest)
+							prev.dates.latest = obj.data.date;
+					});
+			})
+			.then(function(data) {
+				return data.map(function(dataPointType) {
+					dataPointType.type = dataPointType['data.type'];
+					delete dataPointType['data.type'];
+					return dataPointType;
+				});
+			})
+			.catch(function(err) {
+				console.error('mongo baddie');
+				console.error(err);
+			});
+	},
 	getTimelineData: function(user, startDate, endDate)
 	{
 		var lastfm = require(__paths.server.loaders + '/lastfm');
