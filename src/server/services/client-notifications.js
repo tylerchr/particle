@@ -7,8 +7,8 @@ module.exports = {
 	{
 		clearTimeout(timeouts[user]);
 		timeouts[user] = setTimeout(function(){
-			pushNotification(user)
-		}, 1000);
+			module.exports.pushNotification(user)
+		}, 100);
 	},
 
 	pushNotification: function(user)

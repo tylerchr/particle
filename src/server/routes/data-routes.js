@@ -1,5 +1,8 @@
 var router = require('express').Router({ mergeParams: true }),
-	dataApi = require(__paths.server.services + '/data');
+	dataApi = require(__paths.server.services + '/data'),
+	Chance = require('chance');
+
+var chance = new Chance(Math.random);
 
 router.get('/counts', function(req, res) {
 	var currentUser = req.session.loggedInUser.email;
@@ -14,7 +17,8 @@ router.get('/counts', function(req, res) {
 
 router.get('/click', function(req, res) {
 	var currentUser = req.session.loggedInUser.email;
-	dataApi.saveDataPoint(currentUser, "click", {}, new Date())
+
+	dataApi.saveDataPoint(currentUser, "click", {"sentence" : chance.sentence()}, new Date())
 		.then(function(data) {
 			res.status(200).send();
 		})

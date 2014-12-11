@@ -8,7 +8,8 @@ module.exports = {
 	{
 		return {
 			timestamp: dataPoint.date,
-			title: "You sent a click!"
+			title: "You sent a click!",
+			message: dataPoint.payload.sentence
 		};
 	}
 };
