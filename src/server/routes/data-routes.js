@@ -12,6 +12,19 @@ router.get('/counts', function(req, res) {
 		});
 });
 
+router.get('/click', function(req, res) {
+	var currentUser = req.session.loggedInUser.email;
+	dataApi.saveDataPoint(currentUser, "click", {}, new Date())
+		.then(function(data) {
+			res.status(200).send();
+		})
+		.catch(function(err) {
+			console.log(err.stack)
+			res.status(500).send(err.message);
+
+		});
+});
+
 router.get('/timeline', function(req, res) {
 
 	var startDate;
