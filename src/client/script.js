@@ -76,6 +76,10 @@ app.controller('timelineController', [
 
 		reloadData();
 
+		socketChannel.on('newData', function() {
+			reloadData();
+		});
+
 		function getMidnight(opt_date)
 		{
 			opt_date = opt_date || (new Date());
