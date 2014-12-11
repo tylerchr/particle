@@ -17,17 +17,6 @@ module.exports = {
 				// console.log('[%s] It\'s %s!', socket.id, user.email);
 				socket.join('/users/' + user.email);
 			});
-
-			// set up some test handlers
-			// var iteration = 0;
-			// setInterval(function() {
-
-			// 	iteration++;
-			// 	socket.emit('heartbeat', {
-			// 		count: iteration
-			// 	});
-
-			// }, 1000);
 		});
 
 	},

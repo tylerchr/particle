@@ -1,7 +1,7 @@
 var app = angular.module('particleApp', ['ngRoute', 'btford.socket-io']);
 
 app.config(function($routeProvider) {
-	$routeProvider.when('/', {
+	$routeProvider.when('/timeline', {
 		templateUrl: 'pages/timeline.html',
 		controller: 'timelineController'
 	})
@@ -17,12 +17,8 @@ app.config(function($routeProvider) {
 		templateUrl: 'pages/testing.html',
 		controller: 'testingController'
 	})
-	.when('/landing', {
-		templateUrl: 'pages/landing.html',
-		controller: 'landingController'
-	})
 	.otherwise({
-		redirectTo: '/landing'
+		redirectTo: '/timeline'
 	});
 });
 
@@ -58,21 +54,10 @@ app.controller('timelineController', [
 	'particleData',
 	'socketChannel',
 	function($scope, particleData, socketChannel) {
-		$scope.message = 'Timeline!';
 
 		$scope.currentlyLoading = false;
 		$scope.events = [];
 		$scope.date = getMidnight();
-
-		// send the server a message
-		socketChannel.emit('message', {
-			hello: 'world',
-			timestamp: new Date()
-		});
-
-		socketChannel.on('heartbeat', function() {
-			console.log('received a heartbeat');
-		});
 
 		reloadData();
 
