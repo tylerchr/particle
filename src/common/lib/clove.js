@@ -14,7 +14,7 @@
  *  - formatCss needs to do only one thing. aka it shouldn't be scaling the value
  */
 
-$.getScript("lib/easings.js", function(){ // Might cause problems if this loads asynchronously?
+$.getScript("/common/lib/easings.js", function(){ // Might cause problems if this loads asynchronously?
 
 });
 

@@ -33,7 +33,16 @@ app.controller('landingController', function($scope){
 				return x;
 			}
 		});
-	})
+		$(".parallax2").clove({
+			property: "background-position-y",
+			min: 200,
+			max: 1100,
+			easing: function(x, t, b, c, d)
+			{
+				return x;
+			}
+		});
+	});
 });
 
 app.controller('loginController', function($scope, $routeParams){

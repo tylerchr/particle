@@ -1,4 +1,4 @@
-var app = angular.module('particleApp', ['ngRoute', 'btford.socket-io']);
+var app = angular.module('particleApp', ['ngRoute', 'btford.socket-io', 'angularMoment']);
 
 app.config(function($routeProvider) {
 	$routeProvider.when('/timeline', {
@@ -111,14 +111,33 @@ app.controller('timelineController', [
 	}
 ]);
 
-app.controller('dataController', function($scope, $routeParams) {
+app.controller('dataController', function($scope, $routeParams, particleData, socketChannel, amMoment) {
 	$scope.message = 'Look! I am a data page.';
 	$scope.ticker = 0;
 
-	// socket.on('data-count', function(data) {
-	// 	$scope.ticker = data.count;
-	// 	$scope.$apply();
-	// });
+	var updateData = function() {
+
+
+		particleData.getCounts($scope.date)
+			.then(function(counts) {
+				$scope.counts = counts;
+				$scope.ticker = 0;
+				counts.forEach(function(item){
+
+					$scope.ticker += item.count; 
+
+				});
+			});
+
+
+	}
+
+	updateData();
+
+
+	socketChannel.on('newData', function() {
+		updateData();
+	});
 })
 
 app.controller('queryController', function($scope) {
