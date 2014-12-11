@@ -124,7 +124,7 @@ app.controller('dataController', function($scope, $routeParams, particleData, so
 				$scope.ticker = 0;
 				counts.forEach(function(item){
 
-					$scope.ticker += item.count; 
+					$scope.ticker += item.count;
 
 				});
 			});
@@ -159,6 +159,7 @@ app.controller('testingController', function($scope, particleData) {
 	{
 		console.log("Click Sent!!");
 		particleData.sendClick();
+		$scope.data = null;
 	}
 
 	$scope.getData = function()
