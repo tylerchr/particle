@@ -3,7 +3,7 @@ var CronJob = require('cron').CronJob,
 	loader = require(__paths.server.loaders);
 
 var jobs = [
-	{ user: 'tylerchr', service: 'lastfm', cron: '*/60 * * * * *' }
+	{ user: 'tyler9xp@gmail.com', service: 'lastfm', cron: '*/20 * * * * *' }
 ];
 
 

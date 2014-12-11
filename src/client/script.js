@@ -76,6 +76,7 @@ app.controller('timelineController', [
 
 		reloadData();
 
+		// reload the data when new things become available
 		socketChannel.on('newData', function() {
 			reloadData();
 		});
@@ -149,7 +150,7 @@ app.controller('testingController', function($scope, particleData) {
 		opt_date.setHours(0, 0, 0);
 		return opt_date;
 	};
-	
+
 	$scope.sendClick = function()
 	{
 		console.log("Click Sent!!");
