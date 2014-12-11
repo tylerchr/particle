@@ -3,13 +3,8 @@
  	<h1>Testing Page</h1>
  	<p>{{ message }}</p>
 	<button type="button" class="btn btn-primary" ng-click="sendClick()">Send Click</button>
-	<!-- <button type="button" class="btn btn-primary" ng-click="getData()">Get Data</button> -->
+	<button type="button" class="btn btn-primary" ng-click="getData()">Get Data</button>
 </div>
 
-<div class="row">
-	<div class="col-md-4 column">{{lastfm}}</div>
-	<div class="col-md-4 column">{{timeclock}}</div>
-	<div class="col-md-4 column">{{clicks}}</div>
-</div>
+<div ng-if="data"><pre>{{ data }}</pre></div>
 
-<br />

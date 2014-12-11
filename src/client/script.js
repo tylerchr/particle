@@ -98,11 +98,30 @@ app.controller('queryController', function($scope) {
 
 app.controller('testingController', function($scope, particleData) {
 	$scope.message = 'Use this page to test the Particle API';
+	$scope.date = getMidnight();
+
+	function getMidnight(opt_date)
+	{
+		opt_date = opt_date || (new Date());
+		opt_date.setHours(0, 0, 0);
+		return opt_date;
+	};
+	
 	$scope.sendClick = function()
 	{
 		console.log("Click Sent!!");
 		particleData.sendClick();
 	}
+
+	$scope.getData = function()
+	{
+		particleData.getTimelineView($scope.date)
+			.then(function(events) {
+				$scope.data = JSON.stringify(events, undefined, 2);
+				$scope.currentlyLoading = false;
+			});
+	}
+
 });
 
 app.controller('landingController', function($scope){

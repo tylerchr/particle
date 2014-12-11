@@ -2,7 +2,8 @@ var assert = require('assert'),
 	objectHash = require('object-hash'),
 	Promise = require('bluebird'),
 	porqpine = require('porqpine'),
-	loader = require(__paths.server.loaders);
+	loader = require(__paths.server.loaders),
+	notifications = require(__paths.server.services + '/client-notifications');
 
 module.exports = {
 	saveDataPoint: function(user, type, payload, opt_date)
@@ -34,6 +35,10 @@ module.exports = {
 		return porqpine.getDb('particle')
 			.then(function(db) {
 				return db.collection('datapoints').insertAsync(dbDocument);
+			})
+			.then(function(data){
+				notifications.addNotification(user);
+				return data;
 			});
 	},
 	getDataPoints: function(user, startDate, endDate)
