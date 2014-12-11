@@ -30,6 +30,7 @@ router.get('/timeline', function(req, res) {
 			res.status(200).send(points);
 		})
 		.catch(function(err) {
+			console.error(err.stack);
 			res.status(500).send(err.message);
 		});
 });

@@ -10,6 +10,13 @@ module.exports = {
 				apiKey: '549cedf90bd7afd5e7883f9f7516ea42'
 			});
 		}
+		else if (user == 'tylerchr' && service == 'timeclock')
+		{
+			return Promise.resolve({
+				employeeId: 'TYLERC',
+				workplace: 'Qualtrics'
+			});
+		}
 		else
 		{
 			return Promise.reject('Settings not found');

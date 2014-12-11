@@ -1,7 +1,8 @@
 var assert = require('assert'),
 	objectHash = require('object-hash'),
 	Promise = require('bluebird'),
-	porqpine = require('porqpine');
+	porqpine = require('porqpine'),
+	loader = require(__paths.server.loaders);
 
 module.exports = {
 	saveDataPoint: function(user, type, payload, opt_date)
@@ -62,11 +63,7 @@ module.exports = {
 		return module.exports.getDataPoints(startDate, endDate)
 			.then(function(points) {
 				return points.map(function(point) {
-					if (point.data.type === 'lastfm')
-					{
-						loader = lastfm;
-					}
-					return loader.formatForTimeline(point.data);
+					return loader.getLoader(point.data.type).formatForTimeline(point.data);
 				});
 			});
 	}

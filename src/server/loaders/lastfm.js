@@ -5,8 +5,8 @@ var dataApi = require(__paths.server.services + '/data.js'),
 
 function retrievePage(user, apiKey, opt_page, opt_limit)
 {
-	opt_page = parseInt(opt_page || 1);
-	opt_limit = parseInt(opt_limit || 200);
+	opt_page = Math.max(1, parseInt(opt_page || 1));
+	opt_limit = Math.min(parseInt(opt_limit || 200), 200);
 	var url = 'http://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=' + user + '&api_key=' + apiKey + '&format=json&page=' + opt_page + '&limit=' + opt_limit;
 
 	return new Promise(function(resolve, reject) {
@@ -22,7 +22,7 @@ module.exports = {
 	{
 		return userSettings.getSettings('tylerchr', 'lastfm')
 			.then(function(settings) {
-				return retrievePage(settings.username, settings.apiKey, 1, 10)
+				return retrievePage(settings.username, settings.apiKey, 1, 200)
 			})
 			.then(function(tracks) {
 				return Promise.all(tracks.map(function(track) {

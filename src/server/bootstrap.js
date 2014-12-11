@@ -34,4 +34,7 @@ module.exports = function()
 				});
 		});
 
+	// start the periodic updater
+	require(__paths.server.services + '/periodic-updater').beginUpdating();
+
 };
