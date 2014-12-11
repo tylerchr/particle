@@ -136,7 +136,6 @@ app.controller('dataController', function($scope, $routeParams, particleData, so
 		particleData.getCounts($scope.date)
 			.then(function(counts) {
 				$scope.counts = counts;
-				console.log(counts);
 				$scope.ticker = 0;
 				counts.forEach(function(item){
 
