@@ -11,8 +11,23 @@ function retrievePage(user, apiKey, opt_page, opt_limit)
 
 	return new Promise(function(resolve, reject) {
 		request(url, function(err, response, body) {
-			var data = JSON.parse(body);
-			resolve(data.recenttracks.track);
+			if (err)
+			{
+				reject(err);
+			}
+			else
+			{
+				var data = JSON.parse(body);
+				if (data.recenttracks && data.recenttracks.track)
+				{
+					resolve(data.recenttracks.track);
+				}
+				else
+				{
+					console.error('No recent tracks found!', data);
+					reject("No recent tracks found!");
+				}
+			}
 		});
 	});
 }
