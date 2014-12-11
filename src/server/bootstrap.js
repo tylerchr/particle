@@ -9,6 +9,7 @@ module.exports = function()
 {
 	// set up some global paths
 	global.__paths = {
+		common: path.normalize(path.join(__dirname, '../common')),
 		client: path.normalize(path.join(__dirname, '../client')),
 		server: {
 			base: path.normalize(path.join(__dirname)),
@@ -30,7 +31,7 @@ module.exports = function()
 		.then(function(db) {
 			return db.collection('datapoints').ensureIndexAsync('hash', { unique: true })
 				.then(function(){
-					return db.collection('users').ensureIndexAsync('username', {unique: true});
+					return db.collection('users').ensureIndexAsync('email', {unique: true});
 				});
 		});
 

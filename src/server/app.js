@@ -7,18 +7,44 @@ var express = require('express'),
 	_ = require('underscore'),
 	socketio = require('socket.io'),
 	path = require('path'),
-	http = require('http');
+	http = require('http'),
+	cookieParser = require('cookie-parser'),
+	session = require('express-session');
 
 git.short(function(rev) {
 	console.log('Current revision: ' + rev);
 });
+
+function checkAuth(req, res, next)
+{
+	if (!req.session.loggedInUser)
+	{
+		res.redirect("/common/#login?error=login");
+	}
+	else
+	{
+		next();
+	}
+}
 
 var app = express();
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 console.log(__paths.client);
-app.use(express.static(__paths.client));
+
+app.use(cookieParser());
+app.use(session({secret : 'TYLERISAFATPIG',
+				saveUninitialized: true,
+                resave: true}));
+
+app.get('/', function(req, res){
+	res.redirect('/common');
+});
+
+app.use('/common', express.static(__paths.common));
+app.use('/app', checkAuth);
+app.use('/app', express.static(__paths.client));
 
 // set up some routes
 var dataRoutes = require(__paths.server.routes + '/data-routes');

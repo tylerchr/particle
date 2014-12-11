@@ -23,14 +23,6 @@ app.config(function($routeProvider) {
 		templateUrl: 'pages/landing.html',
 		controller: 'landingController'
 	})
-	.when('/login', {
-		templateUrl: 'pages/login.html',
-		controller: 'loginController'
-	})
-	.when('/signup', {
-		templateUrl: 'pages/signup.html',
-		controller: 'signupController'
-	})
 	.otherwise({
 		redirectTo: '/landing'
 	});
@@ -121,62 +113,4 @@ app.controller('landingController', function($scope){
 			}
 		});
 	})
-});
-
-app.controller('loginController', function($scope){
-	$scope.login = function() {
-		alert("Not implemented");
-	}
-});
-
-app.controller('signupController', function($scope, $http){
-
-
-	$scope.signup = function() {
-
-		// Validate Input
-		$scope.errorMessages = [];
-
-		if (!$scope.email || !$scope.password || !$scope.verifyPassword || !$scope.firstname || !$scope.lastname)
-		{
-			$scope.errorMessages.push("Some required fields are missing");
-		}
-
-		if ( $scope.password !== $scope.verifyPassword)
-		{
-			$scope.errorMessages.push("Password do not match!");
-		}
-
-		if ($scope.errorMessages.length > 0)
-		{
-			return;
-		}
-
-		// Create user
-		var userData = {
-			"username": $scope.email,
-			"password": CryptoJS.SHA1($scope.password).toString(CryptoJS.enc.Hex),
-			"firstname": $scope.firstName,
-			"lastname": $scope.lastName
-		};
-
-		var responsePromise = $http.post("/api/v1/user", userData);
-
-		responsePromise.success(function(data, status, headers, config) {
-			if(data === "success")
-			{
-				window.location = "/#";
-			}
-			else {
-				$scope.errorMessages.push(data);
-			}
-		});
-		
-		responsePromise.error(function(data, status, headers, config) {
-			alert(data, status, headers);
-		});
-
-		//alert("Not Implemented");
-
-	}
-});
+});	
