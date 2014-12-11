@@ -2,6 +2,19 @@ var router = require('express').Router({ mergeParams: true }),
 	userApi = require(__paths.server.services + '/users'),
 	crypto = require('crypto');
 
+router.get('/user', function(req, res) {
+
+	var currentUser = req.session.loggedInUser;
+	var hashedEmail = crypto.createHash('md5').update(currentUser.email).digest('hex');
+
+	res.status(200).send({
+		email: currentUser.email,
+		hashedEmail: hashedEmail,
+		firstname: currentUser.firstname,
+		lastname: currentUser.lastname
+	});
+});
+
 router.post('/user', function(req, res) {
 
 	var email = req.param("email");
@@ -22,7 +35,7 @@ router.post('/user', function(req, res) {
 
 	userApi.getUser(email)
 		.then(function(data){
-			if (data.length < 1) // No users with that name / email exist, proceed with creating the new user 
+			if (data.length < 1) // No users with that name / email exist, proceed with creating the new user
 			{
 				var response = userApi.addUser(user)
 					.then(function(data){
@@ -69,7 +82,7 @@ router.post('/login', function(req, res) {
 					"lastname" : data[0].lastname
 				};
 
-				res.redirect("/app/#");		
+				res.redirect("/app/#");
 			}
 			else
 			{

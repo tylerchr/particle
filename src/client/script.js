@@ -113,4 +113,18 @@ app.controller('landingController', function($scope){
 			}
 		});
 	})
-});	
+});
+
+app.controller('particleHeader', [
+	'$scope',
+	'particleData',
+	function($scope, particleData) {
+
+		$scope.currentUser = {};
+		particleData.getCurrentUser()
+			.then(function(user) {
+				$scope.currentUser = user;
+			});
+
+	}
+]);

@@ -2,6 +2,13 @@ angular.module('particleApp')
 	.factory('particleData', ['$http', function($http) {
 
 		return {
+			getCurrentUser: function()
+			{
+				return $http.get('/api/v1/user')
+					.then(function(response) {
+						return response.data;
+					});
+			},
 			getTimelineView: function(startDate)
 			{
 				return $http.get('/api/v1/timeline', {
