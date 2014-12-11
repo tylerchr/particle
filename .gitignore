@@ -1,5 +1,6 @@
 # Temp data
 /data
+/src/client/vendor
 
 # Logs
 logs
