@@ -1,4 +1,4 @@
-var app = angular.module('particleApp', []);
+var app = angular.module('particleApp', ['ngRoute', 'btford.socket-io']);
 
 var socket = io.connect();
 
