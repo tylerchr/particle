@@ -21,6 +21,7 @@
     "q": "1.0.x",
     "request": "^2.34.0",
     "socket.io": "^1.2.1",
+    "time": "^0.11.0",
     "underscore": "1.x"
   },
   "devDependencies": {
