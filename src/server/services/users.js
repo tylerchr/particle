@@ -1,7 +1,7 @@
 var assert = require('assert'),
 	objectHash = require('object-hash'),
 	Promise = require('bluebird'),
-	porqpine = require('porqpine');
+	porqpine = require('porqpine'),
 	crypto = require('crypto');
 
 var tokens = {};

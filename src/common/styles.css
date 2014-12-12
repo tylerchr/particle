@@ -20,6 +20,10 @@ header .navbar-bottom {
 	margin-bottom: 20px;
 }
 
+ul.sources-list a:hover {
+	cursor: pointer;
+}
+
 .main-sidebar {
 	margin: 0;
 	padding: 0;
@@ -289,4 +293,8 @@ footer .container {
 
 .navbar-default .navbar-nav>li>a:hover, .navbar-default .navbar-nav>li>a:focus {
 	color: #c0c0c0;
+}
+
+.padding-right {
+	padding-right: 40px;
 }

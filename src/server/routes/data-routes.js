@@ -1,6 +1,8 @@
 var router = require('express').Router({ mergeParams: true }),
 	dataApi = require(__paths.server.services + '/data'),
-	Chance = require('chance');
+	Chance = require('chance'),
+	loaders = require(__paths.server.loaders),
+	userSettings = require(__paths.server.services + '/user-settings');
 
 var chance = new Chance(Math.random);
 
@@ -29,15 +31,38 @@ router.get('/counts', function(req, res) {
 router.get('/click', function(req, res) {
 	var currentUser = req.session.loggedInUser.email;
 
-	dataApi.saveDataPoint(currentUser, "click", {"sentence" : chance.sentence()}, new Date())
-		.then(function(data) {
-			res.status(200).send();
-		})
-		.catch(function(err) {
-			console.log(err.stack)
-			res.status(500).send(err.message);
+	var defaultSetting = 
+	{
+		clickType: "random"
+	}
 
+	userSettings.getSettings(currentUser, "click", defaultSetting)
+		.then(function(settings){
+
+			var message = "";
+
+			switch(settings.clickType)
+			{
+				case "random": message = chance.sentence(); break;
+				case "custom": message = settings.customMessage; break;
+			}
+
+			dataApi.saveDataPoint(currentUser, "click", {"sentence" : message}, new Date())
+			.then(function(data) {
+				res.status(200).send();
+			})
+			.catch(function(err) {
+				console.log(err.stack)
+				res.status(500).send(err.message);
+
+			});
 		});
+});
+
+router.get('/last.fm/update', function(req, res) {
+	var currentUser = req.session.loggedInUser.email;
+	loaders.getLoader('lastfm').load(currentUser);
+	res.status(202).send("started");
 });
 
 router.get('/timeline', function(req, res) {

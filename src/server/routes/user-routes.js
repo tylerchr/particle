@@ -1,6 +1,32 @@
 var router = require('express').Router({ mergeParams: true }),
 	userApi = require(__paths.server.services + '/users'),
+	userSettings = require(__paths.server.services + '/user-settings'),
 	crypto = require('crypto');
+
+router.get('/user/settings/:service', function(req, res){
+
+	var user = req.session.loggedInUser.email;
+
+	userSettings.getSettings(user, req.params.service)
+		.then(function(settings){
+			res.status(200).send(settings);
+		})
+		.catch(function(err){
+			res.status(404).send("No Data");
+		})
+
+});
+
+router.post('/user/settings/:service', function(req, res){
+
+	var user = req.session.loggedInUser.email;
+
+	userSettings.setSettings(user, req.params.service, req.body.settings)
+		.then(function(data){
+			res.status(200).send("success");
+		});
+
+});
 
 router.get('/user', function(req, res) {
 
