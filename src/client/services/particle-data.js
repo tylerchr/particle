@@ -20,6 +20,13 @@ angular.module('particleApp')
 						return response.data;
 					});
 			},
+			getTimeSeries: function()
+			{
+				return $http.get('/api/v1/timeSeries')
+					.then(function(response) {
+						return response.data;
+					});
+			},
 			sendClick: function()
 			{
 				return $http.get('/api/v1/click')
