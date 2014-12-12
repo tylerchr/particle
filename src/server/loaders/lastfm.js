@@ -33,11 +33,16 @@ function retrievePage(user, apiKey, opt_page, opt_limit)
 }
 
 module.exports = {
-	load: function(user)
+	load: function(user, page)
 	{
+		page = page || 1;
+		var limit = 200;
+
+		console.log("Loading %s songs from page %s", limit, page);
+
 		return userSettings.getSettings(user, 'lastfm')
 			.then(function(settings) {
-				return retrievePage(settings.username, settings.apiKey, 1, 200)
+				return retrievePage(settings.username, settings.apiKey, page, limit)
 			})
 			.then(function(tracks) {
 				return Promise.all(tracks.map(function(track) {

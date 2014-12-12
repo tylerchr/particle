@@ -53,11 +53,15 @@ app.controller('timelineController', [
 	'$scope',
 	'particleData',
 	'socketChannel',
-	function($scope, particleData, socketChannel) {
+	'$location',
+	function($scope, particleData, socketChannel, $location) {
+
+		// hehe... hack to provide a custom date
+		var customDate = $location.search().date;
 
 		$scope.currentlyLoading = false;
 		$scope.events = [];
-		$scope.date = getMidnight();
+		$scope.date = (customDate ? getMidnight(new Date(customDate)) : getMidnight());
 
 		reloadData();
 
