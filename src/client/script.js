@@ -17,6 +17,10 @@ app.config(function($routeProvider) {
 		templateUrl: 'pages/testing.html',
 		controller: 'testingController'
 	})
+	.when('/sources', {
+		templateUrl: 'pages/sources.html',
+		controller: 'sourcesController'
+	})
 	.otherwise({
 		redirectTo: '/timeline'
 	});
@@ -186,4 +190,103 @@ app.controller('landingController', function($scope){
 			}
 		});
 	})
+});
+
+app.controller('sourcesController', function($scope, $http){
+	$scope.sources = [
+		{
+			name: "last.fm",
+			active: false,
+			populate: function(settings)
+			{
+				$scope.settings.lfmUsername = settings.username;
+				$scope.settings.apiKey = settings.apiKey;
+			}
+		},
+		{
+			name: "click",
+			active: false,
+			populate: function(settings)
+			{
+				$scope.settings.customMessage = settings.customMessage;
+				$scope.settings.clickType = settings.clickType;
+			}
+		}
+	];
+
+	$scope.settings = {};
+
+	$scope.changeSource = function(source)
+	{
+		$scope.message = null;
+		$scope.settings = {};
+		$scope.sources.forEach(function(source){
+			source.active = false;
+		});
+		$scope.source = source.name;
+		source.active = true;
+
+		$http.get("/api/v1/user/settings/" + source.name)
+			.success(function(data){
+				source.populate(data);
+			});
+
+	};
+
+	$scope.saveLastFm = function()
+	{
+		console.log("saving last.fm");
+
+		var settings = {
+			"username" : $scope.settings.lfmUsername,
+			"apiKey" : $scope.settings.apiKey	
+		};
+
+		console.log(settings);
+		
+		$http.post("/api/v1/user/settings/lastfm", {"settings": settings})
+			.success(function(data, status, headers, config) {
+				if(data === "success")
+				{
+					$scope.message = "Saved last.fm information"
+				}
+				else {
+					$scope.message = "Failed to save api data"
+				}
+			});
+	};
+
+	$scope.importLastFm = function()
+	{
+		console.log("importing last.fm")
+
+		$http.get("/api/v1/last.fm/update")
+			.success(function(data){
+				$scope.message = "Started importing last.fm data";
+			});
+
+	};
+
+	$scope.saveClick = function()
+	{
+		console.log("saving click");
+
+		var settings = {
+			customMessage: $scope.settings.customMessage,
+			clickType: $scope.settings.clickType
+		};
+
+		$http.post("/api/v1/user/settings/click", {"settings": settings})
+			.success(function(data, status, headers, config) {
+				if(data === "success")
+				{
+					$scope.message = "Saved click information"
+				}
+				else {
+					$scope.message = "Failed to save settings"
+				}
+			});
+	};
+
+	$scope.changeSource($scope.sources[0]);
 });

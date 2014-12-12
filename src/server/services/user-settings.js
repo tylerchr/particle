@@ -2,7 +2,7 @@ var Promise = require('bluebird'),
 	porqpine = require('porqpine');
 
 module.exports = {
-	getSettings: function(user, service)
+	getSettings: function(user, service, defaultSettings)
 	{
 		return porqpine.getDb('particle')
 			.then(function(db) {
@@ -13,7 +13,18 @@ module.exports = {
 					})
 					.then(function(data) {
 						// return just the settings blurb
-						return data.settings;
+						if (!data && !defaultSettings)
+						{
+							return Promise.reject("No Data");
+						}
+						else if(!data)
+						{
+							return defaultSettings;
+						}
+						else 
+						{
+							return data.settings;
+						}
 					});
 			});
 	},
@@ -27,6 +38,8 @@ module.exports = {
 						service: service
 					},
 					{
+						owner: user,
+						service: service,
 						settings: settings
 					},
 					{
@@ -34,7 +47,7 @@ module.exports = {
 					});
 			})
 			.then(function(results) {
-				console.log('Saved %s settings for %s', service, user, results);
+				console.log('Saved %s settings for %s', service, user, results, settings);
 				return results;
 			});
 	}
