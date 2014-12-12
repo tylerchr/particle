@@ -6,6 +6,17 @@ var router = require('express').Router({ mergeParams: true }),
 
 var chance = new Chance(Math.random);
 
+router.use(function(req, res, next) {
+	if (!req.session.loggedInUser && req.path != '/login')
+	{
+		res.status(403).send('Unauthorized');
+	}
+	else
+	{
+		next();
+	}
+});
+
 router.get('/counts', function(req, res) {
 	var currentUser = req.session.loggedInUser.email;
 	dataApi.countDataPoints(currentUser)
@@ -82,6 +93,22 @@ router.get('/timeline', function(req, res) {
 	dataApi.getTimelineData(currentUser, startDate, endDate)
 		.then(function(points) {
 			res.status(200).send(points);
+		})
+		.catch(function(err) {
+			console.error(err.stack);
+			res.status(500).send(err.message);
+		});
+});
+
+router.get('/timeSeries', function(req, res) {
+
+	var startDate = (parseInt(req.query.startDate) ? new Date(parseInt(req.query.startDate)) : new Date("2014-01-01")),
+		endDate = (parseInt(req.query.endDate) ? new Date(parseInt(req.query.endDate)) : new Date());
+
+	var currentUser = req.session.loggedInUser.email;
+	dataApi.getTimeSeriesData(currentUser, startDate, endDate)
+		.then(function(data) {
+			res.status(200).send(data);
 		})
 		.catch(function(err) {
 			console.error(err.stack);

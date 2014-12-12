@@ -115,34 +115,62 @@ app.controller('timelineController', [
 	}
 ]);
 
-app.controller('dataController', function($scope, $routeParams, particleData, socketChannel, amMoment) {
-	$scope.message = 'Look! I am a data page.';
-	$scope.ticker = 0;
+app.controller('dataController', [
+	'$scope',
+	'particleData',
+	'socketChannel',
+	function($scope, particleData, socketChannel) {
 
-	var updateData = function() {
+		function updateGraph()
+		{
+			var startDate = new Date("2014-01-01"),
+				endDate = new Date();
 
+			particleData.getTimeSeries(startDate, endDate)
+				.then(function(data) {
 
-		particleData.getCounts($scope.date)
-			.then(function(counts) {
-				$scope.counts = counts;
-				$scope.ticker = 0;
-				counts.forEach(function(item){
-
-					$scope.ticker += item.count;
+					data_graphic({
+						title: "This Year",
+						// description: "This is a simple line chart. You can remove the area portion by adding <i>area: false</i> to the arguments list.",
+						data: convert_dates(data, 'date'),
+						width: 840,
+						height: 120,
+						// right: 40,
+			            min_x: new Date('2014-01-01'),
+			            max_x: new Date('2014-12-31'),
+						// baselines: fake_baselines,
+						target: '#histogram',
+						x_accessor: 'date',
+						y_accessor: 'value',
+						animate_on_load: true
+					});
 
 				});
-			});
+		}
 
+		updateGraph();
 
-	}
+		function updateData()
+		{
+			particleData.getCounts($scope.date)
+				.then(function(counts) {
+					$scope.counts = counts;
+					$scope.ticker = 0;
+					counts.forEach(function(item){
 
-	updateData();
+						$scope.ticker += item.count;
 
+					});
+				});
+		}
 
-	socketChannel.on('newData', function() {
 		updateData();
-	});
-})
+
+		socketChannel.on('newData', function() {
+			updateData();
+		});
+	}
+]);
 
 app.controller('queryController', function($scope) {
 	$scope.message = 'Contact us! Jk this is just a demo';

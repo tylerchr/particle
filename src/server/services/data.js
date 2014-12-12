@@ -111,5 +111,64 @@ module.exports = {
 					return loader.getLoader(point.data.type).formatForTimeline(point.data);
 				});
 			});
+	},
+	getTimeSeriesData: function(user, startDate, endDate)
+	{
+		return porqpine.getDb('particle')
+			.then(function(db) {
+				return db.collection('datapoints')
+					.aggregateAsync([
+						{
+							$match: {
+								"data.date": {
+									$gte: startDate,
+									$lt: endDate
+								}
+							}
+						},
+						{
+							$project: {
+								day: {
+									years: {
+										$year: '$data.date'
+									},
+									months: {
+										$month: '$data.date'
+									},
+									days: {
+										$dayOfMonth: '$data.date'
+									}
+								},
+							}
+						},
+						{
+							$group: {
+								_id: {
+									day: '$day'
+								},
+								count: {
+									$sum: 1
+								}
+							}
+						},
+						{
+							$sort: {
+								_id: 1
+							}
+						}
+					]);
+			})
+			.then(function(data) {
+				return data.map(function(day) {
+					return {
+						date: [
+							day._id.day.years,
+							day._id.day.months,
+							day._id.day.days
+						].join('-'),
+						value: day.count
+					}
+				});
+			});
 	}
 };

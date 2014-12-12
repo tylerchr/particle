@@ -16,4 +16,4 @@ module.exports = {
 		socketManager.emitToUser(user, "newData", "You've got new data!");
 	}
 
-}
+};
