@@ -227,7 +227,7 @@ app.controller('landingController', function($scope){
 app.controller('sourcesController', function($scope, $http){
 	$scope.sources = [
 		{
-			name: "last.fm",
+			name: "lastfm",
 			active: false,
 			populate: function(settings)
 			{
@@ -271,11 +271,11 @@ app.controller('sourcesController', function($scope, $http){
 
 		var settings = {
 			"username" : $scope.settings.lfmUsername,
-			"apiKey" : $scope.settings.apiKey	
+			"apiKey" : $scope.settings.apiKey
 		};
 
 		console.log(settings);
-		
+
 		$http.post("/api/v1/user/settings/lastfm", {"settings": settings})
 			.success(function(data, status, headers, config) {
 				if(data === "success")
