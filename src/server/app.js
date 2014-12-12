@@ -48,6 +48,20 @@ app.use('/app', express.static(__paths.client));
 // set up some routes
 var dataRoutes = require(__paths.server.routes + '/data-routes');
 var userRoutes = require(__paths.server.routes + '/user-routes');
+
+// require authentication for all but a select few routes
+app.use(function(req, res, next) {
+	var unprotectedRoutes = ['/api/v1/login', '/api/v1/logout', '/api/v1/user'];
+	if (!req.session.loggedInUser && unprotectedRoutes.indexOf(req.path) == -1)
+	{
+		res.status(403).send('Unauthorized');
+	}
+	else
+	{
+		next();
+	}
+});
+
 app.use('/api/v1', dataRoutes);
 app.use('/api/v1', userRoutes);
 

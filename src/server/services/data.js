@@ -120,6 +120,7 @@ module.exports = {
 					.aggregateAsync([
 						{
 							$match: {
+								"owner": user,
 								"data.date": {
 									$gte: startDate,
 									$lt: endDate
