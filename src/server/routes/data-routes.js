@@ -7,7 +7,7 @@ var router = require('express').Router({ mergeParams: true }),
 var chance = new Chance(Math.random);
 
 router.use(function(req, res, next) {
-	if (!req.session.loggedInUser && req.path != '/login')
+	if (!req.session.loggedInUser && (!(req.path == '/login' || req.path == '/logout')))
 	{
 		res.status(403).send('Unauthorized');
 	}
@@ -31,7 +31,7 @@ router.get('/counts', function(req, res) {
 router.get('/click', function(req, res) {
 	var currentUser = req.session.loggedInUser.email;
 
-	var defaultSetting = 
+	var defaultSetting =
 	{
 		clickType: "random"
 	}
