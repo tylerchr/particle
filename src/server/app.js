@@ -31,7 +31,6 @@ var app = express();
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-console.log(__paths.client);
 
 app.use(cookieParser());
 app.use(session({secret : 'TYLERISAFATPIG',

@@ -77,8 +77,11 @@ router.get('/timeline', function(req, res) {
 
 router.get('/timeSeries', function(req, res) {
 
+	var startDate = (parseInt(req.query.startDate) ? new Date(parseInt(req.query.startDate)) : new Date("2014-01-01")),
+		endDate = (parseInt(req.query.endDate) ? new Date(parseInt(req.query.endDate)) : new Date());
+
 	var currentUser = req.session.loggedInUser.email;
-	dataApi.getTimeSeriesData(currentUser)
+	dataApi.getTimeSeriesData(currentUser, startDate, endDate)
 		.then(function(data) {
 			res.status(200).send(data);
 		})

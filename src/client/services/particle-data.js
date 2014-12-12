@@ -20,9 +20,14 @@ angular.module('particleApp')
 						return response.data;
 					});
 			},
-			getTimeSeries: function()
+			getTimeSeries: function(startDate, endDate)
 			{
-				return $http.get('/api/v1/timeSeries')
+				return $http.get('/api/v1/timeSeries', {
+						params: {
+							startDate: startDate.getTime(),
+							endDate: endDate.getTime()
+						}
+					})
 					.then(function(response) {
 						return response.data;
 					});

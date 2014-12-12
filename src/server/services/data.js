@@ -112,12 +112,20 @@ module.exports = {
 				});
 			});
 	},
-	getTimeSeriesData: function(user)
+	getTimeSeriesData: function(user, startDate, endDate)
 	{
 		return porqpine.getDb('particle')
 			.then(function(db) {
 				return db.collection('datapoints')
 					.aggregateAsync([
+						{
+							$match: {
+								"data.date": {
+									$gte: startDate,
+									$lt: endDate
+								}
+							}
+						},
 						{
 							$project: {
 								day: {
